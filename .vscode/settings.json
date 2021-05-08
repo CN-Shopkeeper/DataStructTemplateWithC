@@ -1,7 +1,10 @@
 {
     //包含头文件路径
     "code-runner.executorMap": {
-        "cpp": "chcp 65001 && cd $dir && g++ $fileName -I $workspaceRoot -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        // "cpp": "chcp 65001 && cd $dir && g++ $fileName -I $workspaceRoot -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+        //上面一种是在vs的终端中运行的，下面一种是在外部的终端中运行的。
+        //区别是在vs的内置终端中，如果程序异常终止，则在错误发生前的所有输出都不会显示（正常情况下应该是程序会持续输出直到错误发生）
+        "cpp": "cd $dir && g++ -O2 -std=c++17 -fexec-charset=GBK $fileName -I $workspaceRoot -o $fileNameWithoutExt && start cmd \"/k ; $fileNameWithoutExt\""
     },
     //在终端中运行
     "code-runner.runInTerminal": true
