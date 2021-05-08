@@ -3,6 +3,7 @@
 
 #define LIST_INIT_SIZE 100
 #define LISTINCREMENT 10
+#define MAXSIZE 1000
 
 #define ERROR 0
 #define OK 1
