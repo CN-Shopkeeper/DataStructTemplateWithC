@@ -1,0 +1,8 @@
+{
+    //包含头文件路径
+    "code-runner.executorMap": {
+        "cpp": "chcp 65001 && cd $dir && g++ $fileName -I $workspaceRoot -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+    },
+    //在终端中运行
+    "code-runner.runInTerminal": true
+}
