@@ -31,7 +31,7 @@ void printList_Sq(SqList &l){
  */
 Status initList_Sq(SqList &l){
     l.elem=(ElemType *)malloc(LIST_INIT_SIZE*sizeof(ElemType));
-    if (!l.elem) exit(OVERFOLLOW);
+    if (!l.elem) exit(OVERFLOW);
     l.length=0;
     l.listsize=LIST_INIT_SIZE;
     return OK;
@@ -54,7 +54,7 @@ Status listInsert_Sq(SqList &l,int i,ElemType e){
     if (l.length>l.listsize) //当前分配空间已满
     {
         ElemType * newBase=(ElemType *)realloc(l.elem,(l.listsize+LISTINCREMENT)*sizeof(ElemType));
-        if (!newBase) exit(OVERFOLLOW);
+        if (!newBase) exit(OVERFLOW);
         l.elem=newBase;
     }
     ElemType* q=&(l.elem[i]);
@@ -157,7 +157,7 @@ void mergeList_Sq(SqList a,SqList b,SqList &c){
     ElemType * pc=c.elem=(ElemType *) malloc(c.listsize*sizeof(ElemType));
     if (!pc) {
         printf("内存分配失败！\n ");
-        exit(OVERFOLLOW);
+        exit(OVERFLOW);
     }
     ElemType * pa_last=a.elem+a.length-1;
     ElemType * pb_last=b.elem+b.length-1;

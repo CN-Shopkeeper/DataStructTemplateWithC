@@ -93,7 +93,7 @@ Status insertList_SL(SlinkList &l,SlinkList &space,int &tail,ElemType e){
     int i=malloc_SL(space);
     if (!i){//教材中这里没有检查是否溢出
         printf("备用链表已经分配完！\n");
-        return OVERFOLLOW;
+        return OVERFLOW;
     }
     l[i].data=e;
     l[i].cur=l[tail].cur;

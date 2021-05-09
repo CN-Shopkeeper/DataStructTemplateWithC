@@ -10,7 +10,7 @@
 
 #define ERROR 0
 #define OK 1
-#define OVERFOLLOW -1
+#define OVERFLOW -1
 #define EQUARE 0
 #define GREATER 1
 #define LESSER -1
