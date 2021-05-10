@@ -18,3 +18,32 @@
 typedef int ElemType; //存储元素类型
 typedef int TElemType; //树的元素类型
 typedef int Status;
+
+/**
+ * @brief 树中的visit函数
+ * 
+ * @param e 树中要访问的元素
+ * @return Status 操作结果
+ */
+Status printElement(TElemType e){
+    printf("%d ",e);
+    return OK;
+}
+
+/*先序遍历顺序构建二叉树
+1
+2
+3
+-1
+-1
+4
+5
+-1
+7
+-1
+-1
+10
+-1
+-1
+-1
+*/
