@@ -117,7 +117,7 @@ Status postOrderTraverse(BiTree t,Status(*visit)(TElemType e)){
         }
     }
     while (!res.empty()){
-        printElement(res.top());
+        printTElement(res.top());
         res.pop();
     }
     return OK;
@@ -150,9 +150,9 @@ int main(){
     printf("按照先序遍历的顺序构造该二叉树：\n");
     createBiTree(bt);
     printf("\n先序递归遍历：\n");
-    preOrderTraverse(bt,printElement);
-    inOrderTraverse_1(bt,printElement);
-    inOrderTraverse_2(bt,printElement);
-    postOrderTraverse(bt,printElement);
+    preOrderTraverse(bt,printTElement);
+    inOrderTraverse_1(bt,printTElement);
+    inOrderTraverse_2(bt,printTElement);
+    postOrderTraverse(bt,printTElement);
     return 0;
 }

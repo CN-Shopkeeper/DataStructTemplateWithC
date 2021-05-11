@@ -129,6 +129,6 @@ int main(){
     createBiTree(bt);
     printf("中序线索化二叉树并打印：\n");
     inOrderThreading(thrt,bt);
-    inOrderTraverse(thrt,printElement);
+    inOrderTraverse(thrt,printTElement);
     return 0;
 }
