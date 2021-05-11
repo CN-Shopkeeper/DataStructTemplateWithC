@@ -1,10 +1,18 @@
 #include"general.h"
 
+/**
+ * @brief 链式队列的节点
+ * 
+ */
 typedef struct QNode{
     QElemType data;
     QNode *next;
 }QNode,*QueuePtr;
 
+/**
+ * @brief 链式队列
+ * 
+ */
 typedef struct{
     QueuePtr front;
     QueuePtr rear;
@@ -20,6 +28,12 @@ Status enQueue(LinkQueue &q,QElemType e);
 Status deQueue(LinkQueue &q,QElemType &e);
 Status queueTraverse(LinkQueue q,Status(*visit)(QElemType e));
 
+/**
+ * @brief 初始化队列
+ * 
+ * @param q 队列的引用
+ * @return Status 操作结果
+ */
 Status initQueue(LinkQueue &q){
     q.front=q.rear=(QueuePtr)malloc(sizeof(QNode));
     if (!q.front){
@@ -29,6 +43,13 @@ Status initQueue(LinkQueue &q){
     q.front->next=NULL;
     return OK;
 }
+
+/**
+ * @brief 摧毁队列
+ * 
+ * @param q 队列引用
+ * @return Status 操作结果
+ */
 Status destroyQueue(LinkQueue &q){
     while(q.front){
         QueuePtr p=q.front;
@@ -38,6 +59,12 @@ Status destroyQueue(LinkQueue &q){
     return OK;
 }
 
+/**
+ * @brief 清空队列
+ * 
+ * @param q 队列引用
+ * @return Status 操作结果
+ */
 Status clearQueue(LinkQueue &q){
     QueuePtr p=q.front->next;
     while(p){
@@ -50,10 +77,23 @@ Status clearQueue(LinkQueue &q){
     return OK;
 }
 
+/**
+ * @brief 判断队列是否为空
+ * 
+ * @param q 队列引用
+ * @return true 队列为空
+ * @return false 队列不为空
+ */
 bool queueEmpty(LinkQueue q){
     return q.front==q.rear;
 }
 
+/**
+ * @brief 获取队列长度
+ * 
+ * @param q 队列引用
+ * @return int 队列长度
+ */
 int queueLength(LinkQueue q){
     int len=0;
     QueuePtr p=q.front->next;
@@ -64,11 +104,29 @@ int queueLength(LinkQueue q){
     return len;
 }
 
+/**
+ * @brief 获取队列队首元素
+ * 
+ * @param q 队列引用
+ * @param e 队首元素引用
+ * @return Status 操作结果
+ */
 Status getHead(LinkQueue q,QElemType &e){
+    if (!q.front->next||queueEmpty(q)){
+        printf("队列为空或不存在！\n");
+        return ERROR;
+    }
     e=q.front->next->data;
     return OK;    
 }
 
+/**
+ * @brief 插入元素
+ * 
+ * @param q 队列引用
+ * @param e 要插入的元素的引用
+ * @return Status 操作结果
+ */
 Status enQueue(LinkQueue &q,QElemType e){
     QueuePtr p=(QueuePtr)malloc(sizeof(QNode));
     if (!p){
@@ -82,6 +140,13 @@ Status enQueue(LinkQueue &q,QElemType e){
     return OK;
 }
 
+/**
+ * @brief 弹出队首元素
+ * 
+ * @param q 队列引用
+ * @param e 弹出元素的引用
+ * @return Status 操作结果
+ */
 Status deQueue(LinkQueue &q,QElemType &e){
     if (q.front==q.rear){
         printf("队列为空！\n");
@@ -96,6 +161,13 @@ Status deQueue(LinkQueue &q,QElemType &e){
     return OK;
 }
 
+/**
+ * @brief 遍历队列
+ * 
+ * @param q 队列引用
+ * @param visit 访问函数
+ * @return Status 操作结果
+ */
 Status queueTraverse(LinkQueue q,Status(*visit)(QElemType e)){
     QueuePtr p=q.front->next;
     while (p){

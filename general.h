@@ -9,6 +9,7 @@
 #define MAX_TREE_SIZE 100
 #define STACK_INIT_SIZE 100
 #define STACKINCREMENT 10
+#define MAXQSIZE 100
 
 #define ERROR 0
 #define OK 1
