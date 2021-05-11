@@ -10,6 +10,7 @@
 #define STACK_INIT_SIZE 100
 #define STACKINCREMENT 10
 #define MAXQSIZE 100
+#define INFINITY 0x3f3f3f3f
 
 #define ERROR 0
 #define OK 1
