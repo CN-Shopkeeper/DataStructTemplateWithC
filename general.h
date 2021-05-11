@@ -13,7 +13,7 @@
 #define ERROR 0
 #define OK 1
 #define OVERFLOW -1
-#define EQUARE 0
+#define EQUAL 0
 #define GREATER 1
 #define LESSER -1
 #define TRUE 1
@@ -22,6 +22,7 @@
 typedef int ElemType; //存储元素类型
 typedef int TElemType; //树的元素类型
 typedef int SElemType; //栈的元素类型
+typedef int QElemType; //队列的元素类型
 typedef int Status;
 
 /**
@@ -42,6 +43,17 @@ Status printTElement(TElemType e){
  * @return Status 操作结果
  */
 Status printSElement(SElemType e){
+    printf("%d ",e);
+    return OK;
+}
+
+/**
+ * @brief 队列中的visit函数
+ * 
+ * @param e 队列中要访问的元素
+ * @return Status 操作结果
+ */
+Status printQElement(QElemType e){
     printf("%d ",e);
     return OK;
 }
