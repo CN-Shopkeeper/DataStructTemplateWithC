@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <map>
+using namespace std;
 
 #define LIST_INIT_SIZE 100
 #define LISTINCREMENT 10
@@ -11,6 +13,7 @@
 #define STACKINCREMENT 10
 #define MAXQSIZE 100
 #define INFINITY 0x3f3f3f3f
+#define MAX_VERTEX_NUM 20
 
 #define ERROR 0
 #define OK 1
@@ -25,7 +28,10 @@ typedef int ElemType; //存储元素类型
 typedef int TElemType; //树的元素类型
 typedef int SElemType; //栈的元素类型
 typedef int QElemType; //队列的元素类型
+typedef int InfoType;
+typedef int VertexType;
 typedef int Status;
+typedef int VRType;
 
 /**
  * @brief 树中的visit函数
