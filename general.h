@@ -33,6 +33,8 @@ typedef int VertexType;
 typedef int Status;
 typedef int VRType;
 
+typedef enum {DG,DN,UDG,UDN} GraphKind;
+
 /**
  * @brief 树中的visit函数
  * 

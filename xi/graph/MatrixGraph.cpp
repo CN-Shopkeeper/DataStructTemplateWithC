@@ -1,6 +1,9 @@
 #include"general.h"
 
-typedef enum {DG,DN,UDG,UDN} GraphKind;
+/**
+ * @brief 弧的信息
+ * 
+ */
 typedef struct ArcCell{
     VRType adj;
     InfoType *info;
@@ -8,6 +11,10 @@ typedef struct ArcCell{
     ArcCell(VRType adj,InfoType *info):adj(adj),info(info){}
 }ArcCell,AdjMatrix[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
 
+/**
+ * @brief 相邻矩阵
+ * 
+ */
 typedef struct{
     VertexType vexs[MAX_VERTEX_NUM];
     AdjMatrix arcs;
@@ -19,6 +26,12 @@ typedef struct{
 Status createGraph(MGraph &g);
 Status createUDN(MGraph &g);
 int locateVex(MGraph g,VertexType v);
+
+/**
+ * @brief 打印相邻矩阵
+ * 
+ * @param g 相邻矩阵
+ */
 void printGraph(MGraph g){
     printf("有%d个节点，节点名称为：\n",g.vexNum);
     for (int i=0;i<g.vexNum;i++){
@@ -34,12 +47,24 @@ void printGraph(MGraph g){
     }
 }
 
+/**
+ * @brief 算法7.1 创建一个图（有向网）
+ * 
+ * @param g 图
+ * @return Status 操作结果 
+ */
 Status createGraph(MGraph &g){
-    printf("构建一个无向网（无弧信息）\n");
-    return createUDN(g);
+    printf("构建一个有向网（无弧信息）\n");
+    return createDN(g);
 }
 
-Status createUDN(MGraph &g){
+/**
+ * @brief 算法7.2 创建一个有向网（不是无向网）
+ * 
+ * @param g 网
+ * @return Status 操作结果 
+ */
+Status createDN(MGraph &g){
     printf("输入节点数量:\n");
     scanf("%d",&g.vexNum);
     printf("输入弧数量:\n");
@@ -66,6 +91,13 @@ Status createUDN(MGraph &g){
     return OK;
 }
 
+/**
+ * @brief 根据节点名称获取其在数据结构中的下标
+ * 
+ * @param g 图
+ * @param v 节点名称
+ * @return int 下标
+ */
 int locateVex(MGraph g,VertexType v){
     return g.mapping[v];
 }
