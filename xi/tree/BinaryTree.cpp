@@ -1,6 +1,4 @@
 #include"general.h"
-#include<stack>
-using namespace std;
 
 /**
  * @brief 二叉树
