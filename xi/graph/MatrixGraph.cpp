@@ -26,6 +26,7 @@ typedef struct{
 Status createGraph(MGraph &g);
 Status createDN(MGraph &g);
 Status createUDG(MGraph &g);
+Status createUDN(MGraph &g);
 int locateVex(MGraph g,VertexType v);
 
 /**
@@ -47,7 +48,7 @@ void printGraph(MGraph g){
                 }
             }
         }
-    }else if(g.kind=UDG){
+    }else if(g.kind==UDG){
         for (int i=0;i<g.vexNum;i++){
             for (int j=0;j<i;j++){
                 if (g.arcs[i][j].adj){
@@ -55,8 +56,15 @@ void printGraph(MGraph g){
                 }
             }
         }
+    }else if(g.kind==UDN){
+        for (int i=0;i<g.vexNum;i++){
+            for (int j=0;j<i;j++){
+                if (g.arcs[i][j].adj!=INFINITY){
+                    printf("%d与%d之间有一条权重为%d的弧\n",g.vexs[i],g.vexs[j],g.arcs[i][j].adj);
+                }
+            }
+        }
     }
-    
 }
 
 /**
@@ -66,10 +74,9 @@ void printGraph(MGraph g){
  * @return Status 操作结果 
  */
 Status createGraph(MGraph &g){
-    printf("输入构造的图的类型（有向网：%d；无向图：%d）\n",DN,UDG);
-    int kind;
-    scanf("%d",&kind);
-    switch (kind){
+    printf("输入构造的图的类型（有向网：%d；无向图：%d；无向网：%d）\n",DN,UDG,UDN);
+    scanf("%d",&g.kind);
+    switch (g.kind){
     case DN:
         printf("构建一个有向网（无弧信息）\n");
         return createDN(g);
@@ -77,6 +84,10 @@ Status createGraph(MGraph &g){
     case UDG:
         printf("构建一个无向图\n");
         return createUDG(g);
+        break;
+    case UDN:
+        printf("构建一个无向网（无弧信息）\n");
+        return createUDN(g);
         break;
     default:
         printf("类型错误");
@@ -147,6 +158,40 @@ Status createUDG(MGraph &g){
         int id=locateVex(g,d);
         g.arcs[is][id].adj=1;
         g.arcs[id][is].adj=1;
+        //不输入弧信息
+    }
+    return OK;
+}
+
+/**
+ * @brief 创建一个无向网
+ * 
+ * @param g 网
+ * @return Status 操作结果 
+ */
+Status createUDN(MGraph &g){
+    printf("输入节点数量:\n");
+    scanf("%d",&g.vexNum);
+    printf("输入弧数量:\n");
+    scanf("%d",&g.arcNum);
+    printf("输入各个节点名称:\n");
+    for (int i=0;i<g.vexNum;i++){
+        scanf("%d",&g.vexs[i]);
+        g.mapping[g.vexs[i]]=i;
+    }
+    for (int i=0;i<MAX_VERTEX_NUM;i++){
+        for (int j=0;j<MAX_VERTEX_NUM;j++){
+            g.arcs[i][j]=ArcCell(INFINITY,NULL);
+        }
+    }
+    printf("输入各个弧（源节点 目标节点 权重）:\n");
+    for (int i=0;i<g.arcNum;i++){
+        int s,d,w;
+        scanf("%d%d%d",&s,&d,&w);
+        int is=locateVex(g,s);
+        int id=locateVex(g,d);
+        g.arcs[is][id].adj=w;
+        g.arcs[id][is].adj=w;
         //不输入弧信息
     }
     return OK;

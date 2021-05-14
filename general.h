@@ -3,7 +3,8 @@
 #include <string.h>
 #include <math.h>
 #include <map>
-#include<stack>
+#include <stack>
+#include <queue>
 using namespace std;
 
 #define LIST_INIT_SIZE 100
