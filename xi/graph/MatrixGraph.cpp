@@ -24,7 +24,8 @@ typedef struct{
 }MGraph;
 
 Status createGraph(MGraph &g);
-Status createUDN(MGraph &g);
+Status createDN(MGraph &g);
+Status createUDG(MGraph &g);
 int locateVex(MGraph g,VertexType v);
 
 /**
@@ -38,13 +39,24 @@ void printGraph(MGraph g){
         printf("%d ",g.vexs[i]);
     }
     printf("\n有%d条弧，分别为:\n",g.arcNum);
-    for (int i=0;i<g.vexNum;i++){
-        for (int j=0;j<g.vexNum;j++){
-            if (g.arcs[i][j].adj!=INFINITY){
-                printf("从%d到%d有一条权重为%d的弧\n",g.vexs[i],g.vexs[j],g.arcs[i][j].adj);
+    if (g.kind==DN){
+        for (int i=0;i<g.vexNum;i++){
+            for (int j=0;j<g.vexNum;j++){
+                if (g.arcs[i][j].adj!=INFINITY){
+                    printf("从%d到%d有一条权重为%d的弧\n",g.vexs[i],g.vexs[j],g.arcs[i][j].adj);
+                }
+            }
+        }
+    }else if(g.kind=UDG){
+        for (int i=0;i<g.vexNum;i++){
+            for (int j=0;j<i;j++){
+                if (g.arcs[i][j].adj){
+                    printf("%d和%d之间有一条弧\n",g.vexs[i],g.vexs[j]);
+                }
             }
         }
     }
+    
 }
 
 /**
@@ -54,8 +66,23 @@ void printGraph(MGraph g){
  * @return Status 操作结果 
  */
 Status createGraph(MGraph &g){
-    printf("构建一个有向网（无弧信息）\n");
-    return createDN(g);
+    printf("输入构造的图的类型（有向网：%d；无向图：%d）\n",DN,UDG);
+    int kind;
+    scanf("%d",&kind);
+    switch (kind){
+    case DN:
+        printf("构建一个有向网（无弧信息）\n");
+        return createDN(g);
+        break;
+    case UDG:
+        printf("构建一个无向图\n");
+        return createUDG(g);
+        break;
+    default:
+        printf("类型错误");
+        return ERROR;
+    }
+    
 }
 
 /**
@@ -92,6 +119,40 @@ Status createDN(MGraph &g){
 }
 
 /**
+ * @brief 创建一个无向图
+ * 
+ * @param g 图
+ * @return Status 操作结果 
+ */
+Status createUDG(MGraph &g){
+    printf("输入节点数量:\n");
+    scanf("%d",&g.vexNum);
+    printf("输入弧数量:\n");
+    scanf("%d",&g.arcNum);
+    printf("输入各个节点名称:\n");
+    for (int i=0;i<g.vexNum;i++){
+        scanf("%d",&g.vexs[i]);
+        g.mapping[g.vexs[i]]=i;
+    }
+    for (int i=0;i<MAX_VERTEX_NUM;i++){
+        for (int j=0;j<MAX_VERTEX_NUM;j++){
+            g.arcs[i][j]=ArcCell(0,NULL);
+        }
+    }
+    printf("输入各个弧（源节点 目标节点 权重）:\n");
+    for (int i=0;i<g.arcNum;i++){
+        int s,d,w;
+        scanf("%d%d",&s,&d);
+        int is=locateVex(g,s);
+        int id=locateVex(g,d);
+        g.arcs[is][id].adj=1;
+        g.arcs[id][is].adj=1;
+        //不输入弧信息
+    }
+    return OK;
+}
+
+/**
  * @brief 根据节点名称获取其在数据结构中的下标
  * 
  * @param g 图
@@ -102,9 +163,10 @@ int locateVex(MGraph g,VertexType v){
     return g.mapping[v];
 }
 
-int main(){
-    MGraph g;
-    createGraph(g);
-    printGraph(g);
-    return 0;
-}
+// int main(){
+//     MGraph g;
+//     if (createGraph(g)){
+//         printGraph(g);
+//     }
+//     return 0;
+// }
