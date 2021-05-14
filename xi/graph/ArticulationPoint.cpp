@@ -14,7 +14,7 @@ void findArticul(ALGraph g){
     //默认是连通图，即每一个节点的邻接表都不为空（p!=NULL）
     int v=p->adjvex;
     DFSArticul(g,v);
-    if (counts<g.vexNum){//意味着从根节点的一个儿子访问不了所有的节点（即有其它儿子，必须通过其它儿子访问剩余节点）
+    if (counts<g.vexNum){//意味着生成树从根节点的一个儿子访问不了所有的节点（即有其它儿子，必须通过其它儿子访问剩余节点）
         printf("关键节点%d: %c\n",0,g.vertices[0].data);
         while(p->nextarc){
             p=p->nextarc;
