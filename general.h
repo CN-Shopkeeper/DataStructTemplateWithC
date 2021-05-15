@@ -16,6 +16,7 @@ using namespace std;
 #define MAXQSIZE 100
 #define INFINITY 0x3f3f3f3f
 #define MAX_VERTEX_NUM 20
+#define MAXSTRLEN 255
 
 #define ERROR 0
 #define OK 1
