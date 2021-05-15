@@ -6,6 +6,14 @@ typedef int ShortPathTable[MAX_VERTEX_NUM];
 //记录路径，path[i][j]为前往节点i的第j步的节点
 int path[MAX_VERTEX_NUM][MAX_VERTEX_NUM+1];
 
+/**
+ * @brief 算法 7.15 dijksta算法
+ * 
+ * @param g 图
+ * @param v0 要测距离的顶点
+ * @param p 路径
+ * @param d 距离
+ */
 void dijkstra(MGraph g,int v0,PathMatrix &p,ShortPathTable &d){
     bool final[MAX_VERTEX_NUM];
     for (int i=0;i<g.vexNum;i++){
@@ -67,6 +75,13 @@ void dijkstra(MGraph g,int v0,PathMatrix &p,ShortPathTable &d){
     }
 }
 
+/**
+ * @brief dijkstra（改进记录路径方式）
+ * 
+ * @param g 图
+ * @param v0 开始顶点
+ * @param d 距离
+ */
 void dijkstra(MGraph g,int v0,ShortPathTable &d){
     bool final[MAX_VERTEX_NUM];
     memset(path,-1,sizeof(path));
@@ -127,18 +142,76 @@ void dijkstra(MGraph g,int v0,ShortPathTable &d){
     }
 }
 
+
+int pathF[MAX_VERTEX_NUM][MAX_VERTEX_NUM][MAX_VERTEX_NUM+1];
+int dis[MAX_VERTEX_NUM][MAX_VERTEX_NUM];
+
+/**
+ * @brief 算法7.16 Floyd算法（路径记录算法被改进）
+ * 
+ * @param g 图
+ */
+void floyd(MGraph g){
+    memset(pathF,-1,sizeof(pathF));
+    for (int i=0;i<g.vexNum;i++){
+        for (int j=0;j<g.vexNum;j++){
+            dis[i][j]=g.arcs[i][j].adj;
+            if (g.arcs[i][j].adj!=INFINITY){
+                pathF[i][j][0]=i;
+                pathF[i][j][1]=j;
+            }
+        }
+    }
+    for (int i=0;i<g.vexNum;i++){
+        for (int j=0;j<g.vexNum;j++){
+            for (int k=0;k<g.vexNum;k++){
+                if (dis[i][k]+dis[k][j]<dis[i][j]){
+                    dis[i][j]=dis[i][k]+dis[k][j];
+                    int w=0;
+                    while (pathF[i][k][w]!=-1){
+                        pathF[i][j][w]=pathF[i][k][w];
+                        w++;
+                    }
+                    pathF[i][j][w]=j;
+                }
+            }
+        }
+    }
+
+    printf("用floyd算法：\n");
+    for (int i=0;i<g.vexNum;i++){
+        for (int j=0;j<g.vexNum;j++){
+            if (i!=j){
+                if (dis[i][j]!=INFINITY){
+                    printf("从%d到%d的距离为: %d，路径为：",i,j,dis[i][j]);
+                    int w=0;
+                    while (pathF[i][j][w]!=-1){
+                        printf("%d ",pathF[i][j][w]);
+                        w++;
+                    }
+                    printf("\n");
+                }else {
+                    printf("从%d到%d无法连通\n",i,j);
+                }
+            }
+        }
+    }
+}
+
 int main(){
     MGraph g;
-    PathMatrix p;
-    ShortPathTable d;
+    // PathMatrix p;
+    // ShortPathTable d;
     createGraph(g);
-    dijkstra(g,0,p,d);
-    dijkstra(g,0,d);
+    // dijkstra(g,0,p,d);
+    // dijkstra(g,0,d);
     
+    floyd(g);
     return 0;
 }
 
 /*
+图7.34 dijkstra测试样例
 1
 6
 8
@@ -151,4 +224,17 @@ int main(){
 3 5 10
 4 3 20
 4 5 60
+*/
+
+/*
+图 7.36 floyd算法测试样例
+1
+3
+5
+0 1 2
+0 1 4
+0 2 11
+1 0 6
+1 2 2
+2 0 3
 */
