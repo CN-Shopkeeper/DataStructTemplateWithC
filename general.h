@@ -28,6 +28,10 @@ using namespace std;
 #define TRUE 1
 #define FALSE 0
 
+#define EQ(a,b) ((a)==(b))
+#define LT(a,b) ((a)<(b))
+#define LQ(a,b) ((a)<=(b))
+
 typedef int ElemType; //存储元素类型
 typedef int TElemType; //树的元素类型
 typedef int SElemType; //栈的元素类型
@@ -36,6 +40,7 @@ typedef int InfoType;
 typedef int VertexType;
 typedef int Status;
 typedef int VRType;
+typedef int KeyType;
 
 typedef enum {DG,DN,UDG,UDN} GraphKind;
 
