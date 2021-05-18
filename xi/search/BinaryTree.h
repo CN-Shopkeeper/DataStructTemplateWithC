@@ -1,5 +1,4 @@
 #include"general.h"
-
 /**
  * @brief 二叉树
  * 

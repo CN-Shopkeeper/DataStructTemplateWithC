@@ -31,6 +31,9 @@ using namespace std;
 #define EQ(a,b) ((a)==(b))
 #define LT(a,b) ((a)<(b))
 #define LQ(a,b) ((a)<=(b))
+#define LH 1
+#define EH 0
+#define RH -1
 
 typedef int ElemType; //存储元素类型
 typedef int TElemType; //树的元素类型
