@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include<iostream>
+using namespace std;
 
 #define LIST_INIT_SIZE 100
 #define LISTINCREMENT 10
