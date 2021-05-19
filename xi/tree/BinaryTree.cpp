@@ -1,6 +1,4 @@
 #include"general.h"
-#include<stack>
-using namespace std;
 
 /**
  * @brief 二叉树
@@ -13,17 +11,6 @@ typedef struct BiTNode{
 
 
 /**
- * @brief visit函数
- * 
- * @param e 要访问的元素
- * @return Status 操作结果
- */
-Status printElement(TElemType e){
-    printf("%d ",e);
-    return OK;
-}
-
-/**
  * @brief 算法6.1 递归先序遍历二叉树
  * 
  * @param t 需要遍历的二叉树
@@ -31,7 +18,6 @@ Status printElement(TElemType e){
  * @return Status 返回结果
  */
 Status preOrderTraverse(BiTree t,Status(*visit)(TElemType e)){
-    printf("先序递归遍历：\n");
     if (t){
         if(visit(t->data)){
             if(preOrderTraverse(t->lchild,visit)){
@@ -54,7 +40,7 @@ Status preOrderTraverse(BiTree t,Status(*visit)(TElemType e)){
  * @return Status 返回结果
  */
 Status inOrderTraverse_1(BiTree t,Status(*visit)(TElemType e)){
-    printf("非递归中序遍历二叉树\n");
+    printf("\n非递归中序遍历二叉树\n");
     stack<BiTree> s;//为了方便实现，用stl的stack来实现栈
     BiTree p;
     while (!s.empty()){
@@ -86,10 +72,10 @@ Status inOrderTraverse_1(BiTree t,Status(*visit)(TElemType e)){
  * @return Status 返回结果
  */
 Status inOrderTraverse_2(BiTree t,Status(*visit)(TElemType e)){
-    printf("非递中序归遍历二叉树:\n");
+    printf("\n非递中序归遍历二叉树:\n");
     stack<BiTree> s;//为了方便实现，用stl的stack来实现栈
     BiTree p=t;
-    while (p||s.top()){
+    while (p||!s.empty()){
         if (p){
             s.push(p);
             p=p->lchild;
@@ -113,7 +99,7 @@ Status inOrderTraverse_2(BiTree t,Status(*visit)(TElemType e)){
  * @return Status 返回结果
  */
 Status postOrderTraverse(BiTree t,Status(*visit)(TElemType e)){
-    printf("非递归后序遍历二叉树:\n");
+    printf("\n非递归后序遍历二叉树:\n");
     stack<BiTree> src;
     stack<TElemType> res;
     src.push(t);
@@ -129,7 +115,7 @@ Status postOrderTraverse(BiTree t,Status(*visit)(TElemType e)){
         }
     }
     while (!res.empty()){
-        printElement(res.top());
+        printTElement(res.top());
         res.pop();
     }
     return OK;
@@ -142,7 +128,6 @@ Status postOrderTraverse(BiTree t,Status(*visit)(TElemType e)){
  * @return Status 返回结果
  */
 Status createBiTree(BiTree &bt){
-    printf("按照先序遍历的顺序构造该二叉树：\n");
     int d;
     scanf("%d",&d);
     if(d==-1){
@@ -160,10 +145,12 @@ Status createBiTree(BiTree &bt){
 
 int main(){
     BiTree bt;
+    printf("按照先序遍历的顺序构造该二叉树：\n");
     createBiTree(bt);
-    preOrderTraverse(bt,printElement);
-    inOrderTraverse_1(bt,printElement);
-    inOrderTraverse_2(bt,printElement);
-    postOrderTraverse(bt,printElement);
+    printf("\n先序递归遍历：\n");
+    preOrderTraverse(bt,printTElement);
+    inOrderTraverse_1(bt,printTElement);
+    inOrderTraverse_2(bt,printTElement);
+    postOrderTraverse(bt,printTElement);
     return 0;
 }

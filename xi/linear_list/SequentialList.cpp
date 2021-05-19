@@ -119,7 +119,7 @@ Status compare_ElemType(ElemType x,ElemType y){
     if (x>y){
         return GREATER;
     }else if(x==y){
-        return EQUARE;
+        return EQUAL;
     }else{
         return LESSER;
     }
