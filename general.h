@@ -20,8 +20,8 @@ using namespace std;
 #define MAXSTRLEN 255
 #define CHUNKSIZE 80
 
-#define ERROR 0
-#define OK 1
+#define ERROR false
+#define OK true
 #define OVERFLOW -1
 #define EQUAL 0
 #define GREATER 1
@@ -42,7 +42,7 @@ typedef int SElemType; //栈的元素类型
 typedef int QElemType; //队列的元素类型
 typedef int InfoType;
 typedef int VertexType;
-typedef int Status;
+typedef bool Status;
 typedef int VRType;
 typedef int KeyType;
 
