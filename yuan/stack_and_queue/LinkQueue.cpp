@@ -5,6 +5,7 @@
 
 #include"general.h"
 
+
 typedef struct QNode{
     QElemType data;
     QNode * next;
@@ -102,3 +103,4 @@ Status queueTraverse(LinkQueue q,Status(*visit)(QElemType e)){
     }
     return OK;
 }
+
