@@ -13,13 +13,14 @@ typedef struct BiTNode{
 //构造二叉链表表示的二叉树
 Status createBiTree(BiTree &t){
     //先序创建，t指向根结点
-    char c;
+    int c;
     cout<<"enter tnode:\n";
     cin>>c;
-    if(c==0)t=NULL;
+    if(c==0)t=NULL;//非常不规范！！！！！！！！！！！！
     else{
         t=(BiTree)malloc(sizeof(BiTNode));
         if(!t)exit(OVERFLOW);
+        t->data=c;
         createBiTree(t->lchild);
         createBiTree(t->rchild);
     }
@@ -183,23 +184,61 @@ Status equalTreeN1(BiTree t1,BiTree t2){
 //借助visit函数，任意序列遍历两个二叉树，将结点收集到一个数组里，再访问数组进行判定
 
 //求二叉树的深度
+//递归
 int depth(BiTree t){
-
+    if(t){
+        return depth(t->lchild)>depth(t->rchild)?depth(t->lchild)+1:depth(t->rchild)+1;
+    }else return 0;
 }
 
-//求二叉树中位于先序序列的第k个结点的值
+//求二叉树中位于先序序列的第k个结点的值:    根左右
+//非递归
 BiTree countK(BiTree t,int &k){
-
+    stack<BiTree> s;
+    BiTree p;
+    int count = 0;
+    if(!t)return NULL;
+    s.push(t);
+    while(!s.empty()){
+        p=s.top();
+        s.pop();
+        count++;
+        if(count==k)return p;
+        if(p->rchild)s.push(p->rchild);
+        if(p->lchild)s.push(p->lchild);
+    }
+    return NULL;
 }
-Status locK(BiTree t,int k,TElemType &e){
 
-}
 
 //删除二叉树所有以x为根的子树且释放空间
 void delSubTree(BiTree &t){
-
+    if(t){
+        delSubTree(t->lchild);
+        delSubTree(t->rchild);
+        free(t);
+    }
 }
 
 void delTree(BiTree &t,TElemType x){
+    if(t){
+        if(t->data==x){
+        delSubTree(t);
+        t=NULL;//重要！！
+        }
+        else{
+            if(t->lchild)delTree(t->lchild,x);
+            if(t->rchild)delTree(t->rchild,x);
+        }
+    }
+}
 
+//test
+int main(){
+    BiTree t;
+    createBiTree(t);
+    int k=3;
+    BiTree p=countK(t,k);
+    cout<<"countK k=3:\t"<<p->data<<endl;
+    return 0;
 }
