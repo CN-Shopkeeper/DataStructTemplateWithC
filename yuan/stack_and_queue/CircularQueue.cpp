@@ -34,6 +34,33 @@ Status enQueue(SqQueue &q,QElemType e){
 
 Status deQueue(SqQueue &q,QElemType &e){
     if(q.front==q.rear)return ERROR;
+    e=q.base[q.rear-1];
     q.rear=(q.rear-1+MAXQSIZE) % MAXQSIZE;
     return OK;
+}
+
+//测试输出结果
+void print(SqQueue q){
+    for(int i=q.front;i<q.rear;i++){
+        cout<<q.base[i]<<'\t';
+    }
+    cout<<endl;
+}
+
+//test
+int main(){
+    SqQueue q;
+    initQueue(q);
+    for(int i=1;i<5;i++){
+        enQueue(q,i);
+    }
+    cout<<"队列元素如下："<<queueLength(q)<<endl;
+    print(q);
+    QElemType e;
+    cout<<"删除一个元素：\t";
+    deQueue(q,e);
+    cout<<e<<endl;
+    cout<<"现在的队列:"<<queueLength(q)<<endl;
+    print(q);
+    return 0;
 }
