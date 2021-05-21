@@ -27,7 +27,7 @@ Status createBiTree(BiTree &t){
 }
 
 //递归方式
-//先序遍历二叉树
+//先序遍历二叉树 根左右
 Status preOrderTraverse(BiTree t,Status(*visit)(TElemType e)){
     if(t){
         if(!visit(t->data))return ERROR;
@@ -37,11 +37,23 @@ Status preOrderTraverse(BiTree t,Status(*visit)(TElemType e)){
     return OK;
 }
 //非递归方式
-Status preOrderTraverseN(BiTree,Status(*visit)(TElemType e)){
-
+Status preOrderTraverseN(BiTree t,Status(*visit)(TElemType e)){
+    stack<BiTree> s;
+    if(t==NULL)return ERROR;
+    s.push(t);
+    while(!s.empty()){
+        BiTree now=s.top();
+        s.pop();
+        if(now){
+            if(!visit(now->data))return ERROR;
+            if(now->rchild!=NULL)s.push(now->rchild);
+            if(now->lchild!=NULL)s.push(now->lchild);
+        }
+    }
+    return OK;
 }
 
-//中序遍历二叉树
+//中序遍历二叉树 左根右
 //递归方式
 Status inOrderTraverse(BiTree t,Status(*visit)(TElemType e)){
     if(t){
@@ -94,17 +106,81 @@ Status postOrderTraverse(BiTree t,Status(*visit)(TElemType e)){
     }
     return OK;
 }
+//非递归方式
+Status postOrderTraverseN(BiTree t,Status(*visit)(TElemType e)){
+    stack<BiTree> s;
+    BiTree p;
+    if(t==NULL)return ERROR;
+    s.push(t);
+    while(!s.empty()){
+        p=s.top();
+        while(p){
+            s.push(p->lchild);
+            p=p->lchild;
+        }
+        s.pop();//弹出多余的NULL
+        p=s.top();
+        if(p->rchild)s.push(p->rchild);
+        else{
+            if(!visit(p->data))return ERROR;
+            s.pop();//处理完就弹出
+        }
+        return OK;
+    }
+}
 
 //层序遍历二叉树
 Status levelOrderTraverse(BiTree t,Status(*visit)(TElemType e)){
-    //借助队列？
-
+    //借助队列
+    queue<BiTree> q;
+    BiTree p;
+    if(t==NULL)return ERROR;
+    q.push(t);
+    while(!q.empty()){
+        p=q.front();
+        if(p->lchild)q.push(p->lchild);
+        if(p->rchild)q.push(p->rchild);
+        if(!visit(p->data))return ERROR;
+        q.pop();
+    }
+    return OK;
 }
 
 //判断两棵二叉树是否相等
-Status equal(BiTree t1,BiTree t2){
-
+//递归方式
+Status equalTree(BiTree t1,BiTree t2){
+    if(t1==NULL&&t2==NULL)return OK;
+    else if(t1==NULL ||t2==NULL)return ERROR;
+    else{
+        if(t1->data==t2->data){
+            if( equalTree(t1->lchild,t2->lchild)&&equalTree(t1->rchild,t2->rchild))return OK;
+            else return ERROR;
+        }
+    }
+    return ERROR;
 }
+//非递归方式
+Status equalTreeN1(BiTree t1,BiTree t2){
+    if(t1==NULL&&t2==NULL)return OK;
+    else if(t1==NULL ||t2==NULL)return ERROR;
+    else{
+        queue<BiTree> q1,q2;
+        BiTree n1,n2;
+        q1.push(t1);
+        q2.push(t2);
+        while((!q1.empty())&&(!q2.empty())){
+            n1=q1.front();n2=q2.front();
+            if(n1->data!=n2->data)return ERROR;
+            if(n1->lchild)q1.push(n1->lchild);if(n1->rchild)q1.push(n1->rchild);
+            if(n2->lchild)q2.push(n2->lchild);if(n2->rchild)q2.push(n2->rchild);
+            q1.pop();q2.pop();
+        }
+        return OK;
+    }
+    return ERROR;
+}
+//非递归方式
+//借助visit函数，任意序列遍历两个二叉树，将结点收集到一个数组里，再访问数组进行判定
 
 //求二叉树的深度
 int depth(BiTree t){
