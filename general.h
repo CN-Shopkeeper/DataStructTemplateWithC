@@ -19,6 +19,9 @@ using namespace std;
 #define MAX_VERTEX_NUM 20
 #define MAXSTRLEN 255
 #define CHUNKSIZE 80
+#define MAX_NUM_OF_KEY 8
+#define RADIX 10
+#define MAX_SPACE 1000
 
 #define ERROR false
 #define OK true
@@ -45,6 +48,7 @@ typedef int VertexType;
 typedef bool Status;
 typedef int VRType;
 typedef int KeyType;
+typedef int KeysType;
 
 typedef enum {DG,DN,UDG,UDN} GraphKind;
 
