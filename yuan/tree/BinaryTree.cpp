@@ -233,6 +233,24 @@ void delTree(BiTree &t,TElemType x){
     }
 }
 
+//判断是否为完全二叉树
+bool judge(BiTree t){
+    queue<BiTree> q;//层序遍历
+    BiTree p=t;
+    while(p){
+        q.push(p->lchild);
+        q.push(p->rchild);
+        p=q.front();
+        q.pop();
+    }
+    while(!q.empty()){
+        p=q.front();
+        q.pop();
+        if(p)return false;//队列不空却有p为空则说明不完全
+    }
+    return true;
+}
+
 //test
 int main(){
     BiTree t;
